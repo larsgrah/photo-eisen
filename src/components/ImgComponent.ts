@@ -1,4 +1,5 @@
 import { Component, VApp, ComponentBuildFunc, Props, VNode, src, cssClass } from "@kloudsoftware/eisen"
+import { LightBox } from '../plugins/LightBox'
 
 export class ImgComponent extends Component {
     build(app: VApp): ComponentBuildFunc {
@@ -14,7 +15,12 @@ export class ImgComponent extends Component {
             root.appendChild(img);
             root.appendChild(subtext);
 
-            return {};
+            return {
+                mounted: () => {
+                    const lightBox = app.get<LightBox>("lightBox");
+                    lightBox.addImage(img);
+                }
+            };
         }
     }
 }

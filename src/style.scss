@@ -63,7 +63,7 @@ h1 {
 }
 
 .arrowSvg {
-    color: white;
+    filter: invert(1);
     position: fixed;
     z-index: 2;
     top: 50%;
@@ -76,6 +76,7 @@ h1 {
 }
 
 .arrowSvgRight {
+    filter: invert(1);
     position: fixed;
     z-index: 2;
     top: 50%;

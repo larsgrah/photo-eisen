@@ -1,9 +1,12 @@
 import { VApp, Renderer, cssClass, Props } from "@kloudsoftware/eisen"
 import { ImgComponent } from './components/ImgComponent'
 import { images } from './content'
+import { LightBox } from './plugins/LightBox'
 
 const app = new VApp("target", new Renderer());
 app.init();
+const lightBox = new LightBox();
+app.use("lightBox", lightBox);
 
 const div = app.k("div", { attrs: [cssClass("contentDiv")] }, [
     app.k("h1", { value: "Photos from Lars, taken on earth" }),
