@@ -1,4 +1,7 @@
+//vendor
 import { VApp, Renderer, cssClass, Props } from "@kloudsoftware/eisen"
+
+//own
 import { ImgComponent } from './components/ImgComponent'
 import { images } from './content'
 import { LightBox } from './plugins/LightBox'
@@ -20,6 +23,4 @@ images.forEach(img => {
     props.setProp("subtext", img.subtext);
 
     app.mountComponent(new ImgComponent(), div, props);
-})
-
-
+});

@@ -40,6 +40,10 @@ const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 const ESCAPE = 27;
 
+const getSrcFromAttributes = (attrs: Array<Attribute>): string => {
+    return attrs.filter(attr => attr.attrName === "src").map(attr => attr.attrValue)[0];
+}
+
 class LightboxComponent extends Component {
     lightBox: LightBox;
 
@@ -53,7 +57,7 @@ class LightboxComponent extends Component {
             const lightBoxOpaque = app.k("div", { attrs: [cssClass(classes.lightBoxDiv)] })
             root.appendChild(lightBoxOpaque);
 
-            let clone = app.k("img", {attrs: [src(this.lightBox.current.$getAttrs().filter(attr => attr.attrName === "src").map(attr => attr.attrValue)[0])]})
+            let clone = app.k("img", { attrs: [src(getSrcFromAttributes(this.lightBox.current.$getAttrs()))] })
             lightBoxOpaque.appendChild(clone);
             clone.addClass(classes.lightBoxImage)
             const rightArrow = app.k("img", { attrs: [src("arrow.svg"), cssClass(classes.arrowRight)] })
@@ -64,17 +68,17 @@ class LightboxComponent extends Component {
 
             const handleNextImg = () => {
                 const next = this.lightBox.getNextImage();
-                clone.setAttribute("src", next.$getAttrs().filter(attr => attr.attrName === "src").map(attr => attr.attrValue)[0])
+                clone.setAttribute("src", getSrcFromAttributes(next.$getAttrs()));
                 this.lightBox.current = next;
             }
 
             const handlePrevImg = () => {
                 const prev = this.lightBox.getPrevImage();
-                clone.setAttribute("src", prev.$getAttrs().filter(attr => attr.attrName === "src").map(attr => attr.attrValue)[0])
+                clone.setAttribute("src", getSrcFromAttributes(prev.$getAttrs()));
                 this.lightBox.current = prev;
             }
 
-            rightArrow.addEventlistener("click", () =>  {
+            rightArrow.addEventlistener("click", () => {
                 handleNextImg();
             });
 
@@ -87,8 +91,10 @@ class LightboxComponent extends Component {
                     const handleKeyUp = (ev: KeyboardEvent) => {
                         switch (ev.keyCode) {
                             case RIGHT_ARROW:
+                                handleNextImg();
                                 break;
                             case LEFT_ARROW:
+                                handlePrevImg();
                                 break;
                             case ESCAPE:
                                 app.unmountComponent(root);
@@ -99,7 +105,7 @@ class LightboxComponent extends Component {
                 },
 
                 unmounted: () => {
-                    window.onkeyup = () => {};
+                    window.onkeyup = () => { };
                 }
             };
         }
