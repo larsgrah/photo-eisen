@@ -86,6 +86,10 @@ class LightboxComponent extends Component {
                 handlePrevImg();
             });
 
+            lightBoxOpaque.addEventlistener("click", () => {
+                app.unmountComponent(root);
+            });
+
             return {
                 mounted: () => {
                     const handleKeyUp = (ev: KeyboardEvent) => {
